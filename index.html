@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregas curso de programación, Biophyton</title>
+    <style>
+        /* === ESTILOS GLOBALES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f5fa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* === CABECERA CON TÍTULOS === */
+        .app-header {
+            background: linear-gradient(145deg, #1b3b4f, #0f2c3a);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 6px 12px rgba(0,20,30,0.3);
+            text-align: center;
+            border-bottom: 3px solid #7fc9b1;
+            flex-shrink: 0;
+        }
+
+        .app-header h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 0 #0a1e28;
+        }
+
+        .app-header .subtitulo {
+            font-size: 1.4rem;
+            font-weight: 300;
+            background: rgba(255,255,255,0.08);
+            display: inline-block;
+            padding: 0.3rem 2rem;
+            margin-top: 0.2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+            border: 1px solid #3d7b6e;
+            color: #d9f0e8;
+        }
+
+        /* === CUERPO PRINCIPAL (MENÚ LATERAL + CONTENIDO) === */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            background: #e2eef5;
+        }
+
+        /* === MENÚ LATERAL IZQUIERDO === */
+        .sidebar {
+            width: 260px;
+            background: #1f3e4b;
+            box-shadow: 4px 0 15px rgba(0, 20, 20, 0.5);
+            display: flex;
+            flex-direction: column;
+            color: #edf4f7;
+            border-right: 2px solid #277a6b;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 2rem 0;
+        }
+
+        .sidebar li {
+            padding: 1rem 1.8rem;
+            margin: 0.4rem 0.8rem;
+            border-radius: 30px 0 0 30px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: 0.2s;
+            cursor: pointer;
+            color: #cbdbe4;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar li i { 
+            font-style: normal;
+            font-size: 1.6rem; 
+            filter: drop-shadow(0 2px 2px #0a262f);
+        }
+
+        .sidebar li:hover {
+            background: #2b5466;
+            color: white;
+            border-left: 4px solid #a1e6d4;
+        }
+
+        .sidebar li.activo {
+            background: #296d77;
+            color: white;
+            border-left: 4px solid #f4d03f;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+
+        /* === ÁREA DE CONTENIDO DERECHO (DINÁMICO) === */
+        .content-panel {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            overflow-y: auto;
+            background: #f8fbfd;
+            box-shadow: inset 0 0 10px rgba(0,30,30,0.05);
+        }
+
+        /* Estilo para la tarjeta de comandos (clase nueve) */
+        .comandos-card {
+            background: white;
+            border-radius: 40px 40px 20px 20px;
+            box-shadow: 0 25px 40px -12px #1f4a5e;
+            padding: 2rem 2.5rem;
+            max-width: 850px;
+            margin: 1rem auto;
+            border: 1px solid #c8e2dc;
+            transition: 0.3s;
+        }
+
+        .comandos-card h2 {
+            font-size: 2.2rem;
+            font-weight: 350;
+            border-bottom: 3px dashed #3e9481;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+            color: #1a4c5e;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .comandos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem 1.8rem;
+            background: #eef9f5;
+            padding: 1.8rem;
+            border-radius: 30px;
+            border: 2px solid #bee2d8;
+        }
+
+        .comando-item {
+            background: #1d4a55;
+            color: #f0fcf8;
+            font-family: 'Courier New', monospace;
+            font-size: 1.35rem;
+            font-weight: 600;
+            padding: 0.8rem 1.2rem;
+            border-radius: 60px;
+            text-align: center;
+            box-shadow: 0 6px 0 #0c2d35, 0 8px 12px rgba(0,0,0,0.2);
+            transition: 0.1s linear;
+            border: 1px solid #6fc1b2;
+            letter-spacing: 0.5px;
+        }
+
+        .comando-item:hover {
+            background: #2a6d7a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #0c2d35, 0 12px 18px rgba(12, 65, 77, 0.4);
+        }
+
+        /* clase extra para pestañas adicionales */
+        .placeholder-tab {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem;
+            font-size: 1.5rem;
+            color: #305f6b;
+            box-shadow: 0 12px 25px #b0cfda;
+            text-align: center;
+            border: 2px dotted #4797a5;
+        }
+
+        .placeholder-tab h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            color: #517a84;
+            font-style: italic;
+            text-align: right;
+            border-top: 1px solid #bcd8e0;
+            padding-top: 1rem;
+        }
+
+        /* scroll elegante */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #cbdde4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f6a78;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA con título y subtítulo central -->
+    <header class="app-header">
+        <h1>Entregas curso de programación, Biophyton</h1>
+        <div class="subtitulo">Manuela Montoya Sanes</div>
+    </header>
+
+    <!-- ESTRUCTURA PRINCIPAL: MENÚ LATERAL + CONTENIDO -->
+    <div class="main-layout">
+        <!-- Menú lateral izquierdo (navegación) -->
+        <nav class="sidebar">
+            <ul>
+                <li id="tab-clase9" class="activo">
+                    <i>⌨️</i> Comando clase nueve
+                </li>
+                <li id="tab-variables">
+                    <i>📦</i> Variables y tipos
+                </li>
+                <li id="tab-bucles">
+                    <i>🔄</i> Bucles / for
+                </li>
+                <li id="tab-librerias">
+                    <i>📚</i> Librerías
+                </li>
+                <li id="tab-funciones">
+                    <i>⚙️</i> Funciones extra
+                </li>
+            </ul>
+            <!-- Un pequeño detalle decorativo -->
+            <div style="margin-top: auto; padding: 1rem; font-size: 0.9rem; color: #6f9fae; border-top: 1px solid #2d6070;">
+                ⚡ Biophyton · code
+            </div>
+        </nav>
+
+        <!-- Área derecha de contenido (cambia según pestaña) -->
+        <main class="content-panel" id="contenido-dinamico">
+            <!-- Por defecto se carga la pestaña "Comando clase nueve" con el cuadro de comandos -->
+            <div class="comandos-card">
+                <h2>⌨️ Comando clase nueve</h2>
+                <div class="comandos-grid" id="lista-comandos">
+                    <!-- Los comandos se generarán también desde JS, pero los colocamos fijos por si acaso -->
+                </div>
+                <div style="margin-top: 1.5rem; font-size: 1rem; color: #2d6d7a; background: #dff0ec; padding: 0.5rem 1.5rem; border-radius: 40px;">
+                    ⚡ comandos esenciales · print, input, numpy, etc.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function() {
+            // Elementos del DOM
+            const sidebarItems = document.querySelectorAll('.sidebar li');
+            const contenidoPanel = document.getElementById('contenido-dinamico');
+
+            // Lista completa de comandos para la pestaña principal (clase nueve)
+            const comandosLista = [
+                "print(.)", "print(f\".\")", "input(.)", "float(.)", 
+                "int(.)", "array(.)", "numpy", "math", "import", 
+                "for", "etc", "if", "else", "while", "def", 
+                "range", "len", "str", "list", "dict"
+            ];
+
+            // Función para generar el HTML de comandos (cuadro clase nueve)
+            function generarComandosHTML() {
+                let gridHTML = '';
+                comandosLista.forEach(cmd => {
+                    gridHTML += `<div class="comando-item">${cmd}</div>`;
+                });
+                return gridHTML;
+            }
+
+            // Función para actualizar el contenido según la pestaña activa
+            function activarPestaña(idTab) {
+                // Quitar clase activo de todos los items
+                sidebarItems.forEach(item => item.classList.remove('activo'));
+
+                if (idTab === 'clase9') {
+                    document.getElementById('tab-clase9').classList.add('activo');
+                    contenidoPanel.innerHTML = `
+                        <div class="comandos-card">
+                            <h2>⌨️ Comando clase nueve</h2>
+                            <div class="comandos-grid" id="lista-comandos">
+                                ${generarComandosHTML()}
+                            </div>
+                            <div style="margin-top: 1.5rem; font-size: 1rem; color: #2d6d7a; background: #dff0ec; padding: 0.5rem 1.5rem; border-radius: 40px;">
+                                ⚡ comandos esenciales · print, input, numpy, math, import, for, etc.
+                            </div>
+                        </div>
+                    `;
+                } 
+                else if (idTab === 'variables') {
+                    document.getElementById('tab-variables').classList.add('activo');
+                    contenidoPanel.innerHTML = `
+                        <div class="placeholder-tab">
+                            <h3>📦 Variables y tipos</h3>
+                            <p style="font-size:1.3rem; background:#eef4f7; padding:1.5rem; border-radius:60px;">
+                                int, float, str, bool, list, tuple, dict, set, None<br>
+                                <span style="color:#147382;">"variable = valor" · asignación dinámica</span>
+                            </p>
+                            <div style="margin-top: 2rem;">⚡ puedes explorar ejemplos más adelante</div>
+                        </div>
+                    `;
+                }
+                else if (idTab === 'bucles') {
+                    document.getElementById('tab-bucles').classList.add('activo');
+                    contenidoPanel.innerHTML = `
+                        <div class="placeholder-tab">
+                            <h3>🔄 Bucles / for</h3>
+                            <p style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content:center;">
+                                <span class="comando-item" style="background:#2f626e;">for i in range(5):</span>
+                                <span class="comando-item" style="background:#2f626e;">while condicion:</span>
+                                <span class="comando-item" style="background:#2f626e;">break / continue</span>
+                                <span class="comando-item" style="background:#2f626e;">for clave, valor in dict.items():</span>
+                            </p>
+                        </div>
+                    `;
+                }
+                else if (idTab === 'librerias') {
+                    document.getElementById('tab-librerias').classList.add('activo');
+                    contenidoPanel.innerHTML = `
+                        <div class="placeholder-tab">
+                            <h3>📚 Librerías destacadas</h3>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:2rem 0;">
+                                <div class="comando-item">numpy as np</div>
+                                <div class="comando-item">math</div>
+                                <div class="comando-item">import pandas</div>
+                                <div class="comando-item">matplotlib.pyplot</div>
+                                <div class="comando-item">scipy</div>
+                                <div class="comando-item">statistics</div>
+                            </div>
+                            <p>from math import pi, sqrt, sin</p>
+                        </div>
+                    `;
+                }
+                else if (idTab === 'funciones') {
+                    document.getElementById('tab-funciones').classList.add('activo');
+                    contenidoPanel.innerHTML = `
+                        <div class="placeholder-tab">
+                            <h3>⚙️ Funciones extras</h3>
+                            <p>def mi_funcion(param): <br> &nbsp;&nbsp;&nbsp;&nbsp;return valor</p>
+                            <p>lambda x: x**2, map(), filter(), zip(), enumerate()</p>
+                            <div style="background:#c1e3e9; border-radius:30px; padding:1rem;">*args, **kwargs · decoradores · generadores</div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Asignar eventos a cada elemento del menú lateral
+            document.getElementById('tab-clase9').addEventListener('click', function(e) {
+                activarPestaña('clase9');
+            });
+            document.getElementById('tab-variables').addEventListener('click', function(e) {
+                activarPestaña('variables');
+            });
+            document.getElementById('tab-bucles').addEventListener('click', function(e) {
+                activarPestaña('bucles');
+            });
+            document.getElementById('tab-librerias').addEventListener('click', function(e) {
+                activarPestaña('librerias');
+            });
+            document.getElementById('tab-funciones').addEventListener('click', function(e) {
+                activarPestaña('funciones');
+            });
+
+            // Inicializar con la pestaña "Comando clase nueve" activa (por defecto ya lo está en HTML)
+            // Pero aseguramos que los comandos se rendericen (en caso de que el estático no tenga grid).
+            // El contenido ya existe pero igual podemos sobreescribir para asegurar grid con todos los comandos
+            // sin embargo, para mantener consistencia ejecutamos la activación inicial.
+            // Pero cuidado: duplicaría si ya existe. Preferimos llamar a activarPestaña('clase9') al inicio para unificar.
+            activarPestaña('clase9');
+        })();
+    </script>
+
+    <!-- pequeño fix para que el grid de comandos tenga todos los items incluso sin JS (respaldo) -->
+    <noscript>
+        <style>.comandos-grid { display: none; }</style>
+        <div style="background: #ffcccb; padding: 1rem;">JavaScript necesario para visualizar completamente los comandos</div>
+    </noscript>
+</body>
+</html>
