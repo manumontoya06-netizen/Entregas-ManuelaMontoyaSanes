@@ -3,399 +3,1231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entregas curso de programación, Biophyton</title>
+    <title>Entregas curso de programacion, Biophyton</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        /* === ESTILOS GLOBALES === */
+        :root {
+            --bg-primary: #0d1b2a;
+            --bg-secondary: #1b263b;
+            --bg-tertiary: #2d3a4f;
+            --accent: #e07a5f;
+            --accent-light: #f2cc8f;
+            --text-primary: #e0e1dd;
+            --text-secondary: #9ba8ab;
+            --card-bg: #162032;
+            --border: #3d5a80;
+            --success: #81b29a;
+            --highlight: #f4d35e;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
 
         body {
-            background: #f0f5fa;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             height: 100vh;
-            display: flex;
-            flex-direction: column;
             overflow: hidden;
         }
 
-        /* === CABECERA CON TÍTULOS === */
+        /* Header */
         .app-header {
-            background: linear-gradient(145deg, #1b3b4f, #0f2c3a);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 6px 12px rgba(0,20,30,0.3);
-            text-align: center;
-            border-bottom: 3px solid #7fc9b1;
-            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 1.2rem 2.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--success));
         }
 
         .app-header h1 {
-            font-size: 2.2rem;
-            font-weight: 400;
-            letter-spacing: 1.5px;
-            text-shadow: 2px 2px 0 #0a1e28;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, var(--text-primary), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .app-header .subtitulo {
-            font-size: 1.4rem;
-            font-weight: 300;
-            background: rgba(255,255,255,0.08);
-            display: inline-block;
-            padding: 0.3rem 2rem;
-            margin-top: 0.2rem;
-            border-radius: 40px;
-            backdrop-filter: blur(2px);
-            border: 1px solid #3d7b6e;
-            color: #d9f0e8;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 400;
         }
 
-        /* === CUERPO PRINCIPAL (MENÚ LATERAL + CONTENIDO) === */
+        /* Layout principal */
         .main-layout {
             display: flex;
-            flex: 1;
-            overflow: hidden;
-            background: #e2eef5;
+            height: calc(100vh - 70px);
         }
 
-        /* === MENÚ LATERAL IZQUIERDO === */
+        /* Sidebar */
         .sidebar {
-            width: 260px;
-            background: #1f3e4b;
-            box-shadow: 4px 0 15px rgba(0, 20, 20, 0.5);
+            width: 240px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            color: #edf4f7;
-            border-right: 2px solid #277a6b;
-            overflow-y: auto;
             flex-shrink: 0;
         }
 
-        .sidebar ul {
+        .sidebar-menu {
             list-style: none;
-            padding: 2rem 0;
+            padding: 1rem 0;
+            flex: 1;
+            overflow-y: auto;
         }
 
-        .sidebar li {
-            padding: 1rem 1.8rem;
-            margin: 0.4rem 0.8rem;
-            border-radius: 30px 0 0 30px;
-            font-size: 1.25rem;
-            font-weight: 500;
+        .sidebar-item {
+            padding: 0.9rem 1.5rem;
+            margin: 0.3rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            transition: 0.2s;
-            cursor: pointer;
-            color: #cbdbe4;
-            border-left: 4px solid transparent;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            border-left: 3px solid transparent;
         }
 
-        .sidebar li i { 
-            font-style: normal;
-            font-size: 1.6rem; 
-            filter: drop-shadow(0 2px 2px #0a262f);
+        .sidebar-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
         }
 
-        .sidebar li:hover {
-            background: #2b5466;
-            color: white;
-            border-left: 4px solid #a1e6d4;
+        .sidebar-item.activo {
+            background: var(--bg-tertiary);
+            color: var(--accent-light);
+            border-left-color: var(--accent);
+            font-weight: 500;
         }
 
-        .sidebar li.activo {
-            background: #296d77;
-            color: white;
-            border-left: 4px solid #f4d03f;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-            font-weight: 600;
+        .sidebar-item .icon {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
         }
 
-        /* === ÁREA DE CONTENIDO DERECHO (DINÁMICO) === */
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contenido principal */
         .content-panel {
             flex: 1;
-            padding: 2rem 2.5rem;
             overflow-y: auto;
-            background: #f8fbfd;
-            box-shadow: inset 0 0 10px rgba(0,30,30,0.05);
+            padding: 1.5rem;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, #0a141f 100%);
         }
 
-        /* Estilo para la tarjeta de comandos (clase nueve) */
+        /* Panel de comandos */
         .comandos-card {
-            background: white;
-            border-radius: 40px 40px 20px 20px;
-            box-shadow: 0 25px 40px -12px #1f4a5e;
-            padding: 2rem 2.5rem;
-            max-width: 850px;
-            margin: 1rem auto;
-            border: 1px solid #c8e2dc;
-            transition: 0.3s;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .comandos-card h2 {
-            font-size: 2.2rem;
-            font-weight: 350;
-            border-bottom: 3px dashed #3e9481;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1.8rem;
-            color: #1a4c5e;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--accent-light);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border);
         }
 
         .comandos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1rem 1.8rem;
-            background: #eef9f5;
-            padding: 1.8rem;
-            border-radius: 30px;
-            border: 2px solid #bee2d8;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.8rem;
         }
 
         .comando-item {
-            background: #1d4a55;
-            color: #f0fcf8;
-            font-family: 'Courier New', monospace;
-            font-size: 1.35rem;
-            font-weight: 600;
-            padding: 0.8rem 1.2rem;
-            border-radius: 60px;
+            background: var(--bg-tertiary);
+            color: var(--highlight);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            padding: 0.7rem 1rem;
+            border-radius: 6px;
             text-align: center;
-            box-shadow: 0 6px 0 #0c2d35, 0 8px 12px rgba(0,0,0,0.2);
-            transition: 0.1s linear;
-            border: 1px solid #6fc1b2;
-            letter-spacing: 0.5px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+            cursor: default;
         }
 
         .comando-item:hover {
-            background: #2a6d7a;
+            background: var(--bg-secondary);
+            border-color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 8px 0 #0c2d35, 0 12px 18px rgba(12, 65, 77, 0.4);
         }
 
-        /* clase extra para pestañas adicionales */
+        /* Placeholder tabs */
         .placeholder-tab {
-            background: white;
-            border-radius: 30px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
             padding: 2.5rem;
-            font-size: 1.5rem;
-            color: #305f6b;
-            box-shadow: 0 12px 25px #b0cfda;
             text-align: center;
-            border: 2px dotted #4797a5;
+            max-width: 800px;
+            margin: 2rem auto;
         }
 
         .placeholder-tab h3 {
-            font-size: 2rem;
-            font-weight: 300;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-light);
             margin-bottom: 1rem;
         }
 
-        .footer-note {
-            margin-top: 2rem;
-            color: #517a84;
+        /* ============================================ */
+        /* SECCION ENTREGA - PDF VIEWER */
+        /* ============================================ */
+        .entrega-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 1rem;
+        }
+
+        .entrega-header {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .entrega-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent-light);
+        }
+
+        .entrega-fecha {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+        }
+
+        /* Submenu de PDFs */
+        .pdf-submenu {
+            display: flex;
+            gap: 0.8rem;
+            padding: 0 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .pdf-tab {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pdf-tab:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        .pdf-tab.activo {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--bg-tertiary), var(--card-bg));
+            box-shadow: 0 4px 20px rgba(224, 122, 95, 0.15);
+        }
+
+        .pdf-tab .tab-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .pdf-tab.activo .tab-icon {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .pdf-tab .tab-info h4 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .pdf-tab .tab-info p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Visor PDF */
+        .pdf-viewer {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .pdf-toolbar {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .pdf-toolbar-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .pdf-toolbar-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pdf-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pdf-btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .pdf-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            background: #faf9f7;
+        }
+
+        /* Estilos del documento PDF simulado */
+        .pdf-page {
+            background: white;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 3rem 3.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 3px;
+            color: #1a1a1a;
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.7;
+        }
+
+        .pdf-page h1 {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: normal;
+            color: #111;
+            margin-bottom: 0.3rem;
+        }
+
+        .pdf-page .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
             font-style: italic;
-            text-align: right;
-            border-top: 1px solid #bcd8e0;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .pdf-page .author {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 0.3rem;
+        }
+
+        .pdf-page .date {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .pdf-page h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #111;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .pdf-page h3 {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #222;
+            margin: 1.2rem 0 0.6rem;
+        }
+
+        .pdf-page p {
+            margin-bottom: 0.8rem;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+
+        .pdf-page .equation {
+            text-align: center;
+            margin: 1rem 0;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1rem;
+        }
+
+        .pdf-page .theorem {
+            background: #f8f8f8;
+            border-left: 3px solid #333;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .pdf-page .theorem-title {
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .pdf-page .example {
+            background: #f5f5f5;
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .pdf-page .example-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pdf-page code {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        .pdf-page pre {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+
+        .pdf-page .abstract {
+            background: #fafafa;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .pdf-page .references {
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+        }
+
+        .pdf-page .references p {
+            margin-bottom: 0.4rem;
+        }
+
+        .pdf-page .page-number {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
             padding-top: 1rem;
         }
 
-        /* scroll elegante */
+        /* Scrollbar personalizado */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #cbdde4;
+            background: var(--bg-primary);
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #1f6a78;
-            border-radius: 10px;
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 200px;
+            }
+            .pdf-submenu {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+            .sidebar-item {
+                white-space: nowrap;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
         }
     </style>
 </head>
 <body>
 
-    <!-- CABECERA con título y subtítulo central -->
     <header class="app-header">
-        <h1>Entregas curso de programación, Biophyton</h1>
+        <div>
+            <h1>Entregas curso de programacion, Biophyton</h1>
+        </div>
         <div class="subtitulo">Manuela Montoya Sanes</div>
     </header>
 
-    <!-- ESTRUCTURA PRINCIPAL: MENÚ LATERAL + CONTENIDO -->
     <div class="main-layout">
-        <!-- Menú lateral izquierdo (navegación) -->
         <nav class="sidebar">
-            <ul>
-                <li id="tab-clase9" class="activo">
-                    <i>⌨️</i> Comando clase nueve
+            <ul class="sidebar-menu">
+                <li class="sidebar-item" data-tab="clase9">
+                    <span class="icon">/</span> Comando clase nueve
                 </li>
-                <li id="tab-variables">
-                    <i>📦</i> Variables y tipos
+                <li class="sidebar-item" data-tab="variables">
+                    <span class="icon">[ ]</span> Variables y tipos
                 </li>
-                <li id="tab-bucles">
-                    <i>🔄</i> Bucles / for
+                <li class="sidebar-item" data-tab="bucles">
+                    <span class="icon">~</span> Bucles / for
                 </li>
-                <li id="tab-librerias">
-                    <i>📚</i> Librerías
+                <li class="sidebar-item" data-tab="librerias">
+                    <span class="icon">+</span> Librerias
                 </li>
-                <li id="tab-funciones">
-                    <i>⚙️</i> Funciones extra
+                <li class="sidebar-item" data-tab="funciones">
+                    <span class="icon">( )</span> Funciones extra
+                </li>
+                <li class="sidebar-item activo" data-tab="entrega">
+                    <span class="icon">*</span> Entrega viernes 27/02/2026
                 </li>
             </ul>
-            <!-- Un pequeño detalle decorativo -->
-            <div style="margin-top: auto; padding: 1rem; font-size: 0.9rem; color: #6f9fae; border-top: 1px solid #2d6070;">
-                ⚡ Biophyton · code
+            <div class="sidebar-footer">
+                Biophyton code
             </div>
         </nav>
 
-        <!-- Área derecha de contenido (cambia según pestaña) -->
-        <main class="content-panel" id="contenido-dinamico">
-            <!-- Por defecto se carga la pestaña "Comando clase nueve" con el cuadro de comandos -->
-            <div class="comandos-card">
-                <h2>⌨️ Comando clase nueve</h2>
-                <div class="comandos-grid" id="lista-comandos">
-                    <!-- Los comandos se generarán también desde JS, pero los colocamos fijos por si acaso -->
-                </div>
-                <div style="margin-top: 1.5rem; font-size: 1rem; color: #2d6d7a; background: #dff0ec; padding: 0.5rem 1.5rem; border-radius: 40px;">
-                    ⚡ comandos esenciales · print, input, numpy, etc.
-                </div>
-            </div>
+        <main class="content-panel" id="contenido">
+            <!-- Contenido dinamico -->
         </main>
     </div>
 
     <script>
-        (function() {
-            // Elementos del DOM
-            const sidebarItems = document.querySelectorAll('.sidebar li');
-            const contenidoPanel = document.getElementById('contenido-dinamico');
+        // Datos de los comandos
+        const comandos = [
+            "print(.)", "print(f\".\")", "input(.)", "float(.)",
+            "int(.)", "array(.)", "numpy", "math", "import",
+            "for", "etc", "if", "else", "while", "def",
+            "range", "len", "str", "list", "dict"
+        ];
 
-            // Lista completa de comandos para la pestaña principal (clase nueve)
-            const comandosLista = [
-                "print(.)", "print(f\".\")", "input(.)", "float(.)", 
-                "int(.)", "array(.)", "numpy", "math", "import", 
-                "for", "etc", "if", "else", "while", "def", 
-                "range", "len", "str", "list", "dict"
-            ];
+        // Contenido PDF 1 - Po Shen Loh
+        const pdfPoShenLoh = `
+            <div class="pdf-page">
+                <h1>Resolucion de ecuaciones cuadraticas Po Shen Loh</h1>
+                <p class="subtitle">El metodo de Po Shen Loh: Una nueva perspectiva sobre la ecuacion cuadratica</p>
+                <p class="author">Manuela Montoya Sanes</p>
+                <p class="date">27 de febrero de 2026</p>
 
-            // Función para generar el HTML de comandos (cuadro clase nueve)
-            function generarComandosHTML() {
-                let gridHTML = '';
-                comandosLista.forEach(cmd => {
-                    gridHTML += `<div class="comando-item">${cmd}</div>`;
-                });
-                return gridHTML;
-            }
+                <h2>Resumen</h2>
+                <div class="abstract">
+                    <p>La formula cuadratica es uno de los resultados mas conocidos en matematicas elementales. Sin embargo, el matematico Po Shen Loh, de la Universidad Carnegie Mellon, propuso en 2019 un metodo alternativo para resolver ecuaciones de segundo grado que resulta mas intuitivo y elegante. Este articulo presenta su tecnica, basada en relaciones entre coeficientes y simetria, y la compara con el enfoque tradicional.</p>
+                </div>
 
-            // Función para actualizar el contenido según la pestaña activa
-            function activarPestaña(idTab) {
-                // Quitar clase activo de todos los items
-                sidebarItems.forEach(item => item.classList.remove('activo'));
+                <h2>1. Introduccion</h2>
+                <p>La ecuacion cuadratica general</p>
+                <div class="equation">ax<sup>2</sup> + bx + c = 0, a &ne; 0 &nbsp;&nbsp;&nbsp; (1)</div>
+                <p>tiene como solucion conocida</p>
+                <div class="equation">x = (-b &plusmn; &radic;(b<sup>2</sup> - 4ac)) / 2a &nbsp;&nbsp;&nbsp; (2)</div>
+                <p>Sin embargo, Po Shen Loh observo que este enfoque, aunque correcto, oscurece la relacion natural entre las raices. Su metodo se basa en dos propiedades fundamentales:</p>
+                <p>- La suma de las raices esta relacionada con el coeficiente b.<br>- El producto de las raices esta relacionado con el coeficiente c.</p>
 
-                if (idTab === 'clase9') {
-                    document.getElementById('tab-clase9').classList.add('activo');
-                    contenidoPanel.innerHTML = `
-                        <div class="comandos-card">
-                            <h2>⌨️ Comando clase nueve</h2>
-                            <div class="comandos-grid" id="lista-comandos">
-                                ${generarComandosHTML()}
+                <h2>2. El metodo tradicional vs. el enfoque de Po Shen Loh</h2>
+                <p>Consideremos primero la forma monica de la ecuacion cuadratica:</p>
+                <div class="equation">x<sup>2</sup> + Bx + C = 0 &nbsp;&nbsp;&nbsp; (3)</div>
+                <p>donde B = b/a y C = c/a.</p>
+
+                <h3>2.1. Relaciones de Vieta</h3>
+                <p>Las formulas de Vieta establecen que si r<sub>1</sub> y r<sub>2</sub> son las raices, entonces:</p>
+                <div class="equation">r<sub>1</sub> + r<sub>2</sub> = -B &nbsp;&nbsp;&nbsp; (4)</div>
+                <div class="equation">r<sub>1</sub> &middot; r<sub>2</sub> = C &nbsp;&nbsp;&nbsp; (5)</div>
+
+                <h3>2.2. La idea central de Po Shen Loh</h3>
+                <p>La clave del metodo es darse cuenta de que las dos raices deben tener la forma:</p>
+                <div class="equation">r<sub>1</sub> = u + d, r<sub>2</sub> = u - d &nbsp;&nbsp;&nbsp; (6)</div>
+                <p>donde u es el punto medio de las raices y d es la distancia desde ese punto medio a cada raiz.</p>
+                <p>Por las relaciones de Vieta, la suma es:</p>
+                <div class="equation">(u + d) + (u - d) = 2u = -B &rarr; u = -B/2 &nbsp;&nbsp;&nbsp; (7)</div>
+                <p>El producto es:</p>
+                <div class="equation">(u + d)(u - d) = u<sup>2</sup> - d<sup>2</sup> = C &nbsp;&nbsp;&nbsp; (8)</div>
+                <p>Despejando d<sup>2</sup>:</p>
+                <div class="equation">d<sup>2</sup> = u<sup>2</sup> - C &nbsp;&nbsp;&nbsp; (9)</div>
+                <p>Por lo tanto, las raices son:</p>
+                <div class="equation">x = u &plusmn; &radic;(u<sup>2</sup> - C) = -B/2 &plusmn; &radic;((B/2)<sup>2</sup> - C) &nbsp;&nbsp;&nbsp; (10)</div>
+
+                <h2>3. Demostracion formal</h2>
+                <div class="theorem">
+                    <p><span class="theorem-title">Teorema 3.1 (Metodo de Po Shen Loh).</span> Para la ecuacion cuadratica x<sup>2</sup> + Bx + C = 0, las soluciones son:</p>
+                    <div class="equation">x = -B/2 &plusmn; &radic;((B/2)<sup>2</sup> - C) &nbsp;&nbsp;&nbsp; (11)</div>
+                </div>
+                <p><strong>Demostracion.</strong> Sean r<sub>1</sub> y r<sub>2</sub> las raices. Por Vieta:</p>
+                <div class="equation">r<sub>1</sub> + r<sub>2</sub> = -B &nbsp;&nbsp;&nbsp; (12)</div>
+                <div class="equation">r<sub>1</sub>r<sub>2</sub> = C &nbsp;&nbsp;&nbsp; (13)</div>
+                <p>Definimos u = (r<sub>1</sub> + r<sub>2</sub>)/2 = -B/2 y d = (r<sub>1</sub> - r<sub>2</sub>)/2. Entonces r<sub>1</sub> = u + d, r<sub>2</sub> = u - d. Sustituyendo en el producto:</p>
+                <div class="equation">(u + d)(u - d) = u<sup>2</sup> - d<sup>2</sup> = C &nbsp;&nbsp;&nbsp; (14)</div>
+                <div class="equation">&rArr; d<sup>2</sup> = u<sup>2</sup> - C = (-B/2)<sup>2</sup> - C &nbsp;&nbsp;&nbsp; (15)</div>
+                <p>Por tanto, d = &plusmn;&radic;(u<sup>2</sup> - C), y las raices son u &plusmn; d.</p>
+                <div class="page-number">1</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>4. Ejemplos ilustrativos</h2>
+                
+                <div class="example">
+                    <p><span class="example-title">Ejemplo 4.1 (Ecuacion con raices enteras).</span> Resolver x<sup>2</sup> - 5x + 6 = 0.</p>
+                    <p>Aplicamos el metodo:</p>
+                    <p>u = -(-5)/2 = 5/2 = 2,5 &nbsp;&nbsp;&nbsp; (16)</p>
+                    <p>d<sup>2</sup> = (5/2)<sup>2</sup> - 6 = 25/4 - 6 = (25 - 24)/4 = 1/4 &nbsp;&nbsp;&nbsp; (17)</p>
+                    <p>d = &plusmn;1/2 &nbsp;&nbsp;&nbsp; (18)</p>
+                    <p>Por lo tanto:</p>
+                    <p>r<sub>1</sub> = 2,5 + 0,5 = 3 &nbsp;&nbsp;&nbsp; (19)</p>
+                    <p>r<sub>2</sub> = 2,5 - 0,5 = 2 &nbsp;&nbsp;&nbsp; (20)</p>
+                </div>
+
+                <div class="example">
+                    <p><span class="example-title">Ejemplo 4.2 (Ecuacion con raices complejas).</span> Resolver x<sup>2</sup> + 2x + 5 = 0.</p>
+                    <p>Calculamos:</p>
+                    <p>u = -2/2 = -1 &nbsp;&nbsp;&nbsp; (21)</p>
+                    <p>d<sup>2</sup> = (-1)<sup>2</sup> - 5 = 1 - 5 = -4 &nbsp;&nbsp;&nbsp; (22)</p>
+                    <p>d = &plusmn;2i &nbsp;&nbsp;&nbsp; (23)</p>
+                    <p>Las raices son:</p>
+                    <p>r<sub>1</sub> = -1 + 2i &nbsp;&nbsp;&nbsp; (24)</p>
+                    <p>r<sub>2</sub> = -1 - 2i &nbsp;&nbsp;&nbsp; (25)</p>
+                </div>
+
+                <h2>5. Ventajas del metodo de Po Shen Loh</h2>
+                <p><strong>Intuitividad:</strong> El metodo parte de la simetria natural de las raices alrededor de su punto medio.</p>
+                <p><strong>Menos memorizacion:</strong> No requiere recordar la formula completa, solo las relaciones de Vieta.</p>
+                <p><strong>Conexion conceptual:</strong> Relaciona explicitamente los coeficientes con la geometria de las raices.</p>
+                <p><strong>Facilidad para raices complejas:</strong> El procedimiento es identico, solo que d resulta imaginario.</p>
+
+                <h2>6. Generalizacion para la forma estandar</h2>
+                <p>Para la ecuacion ax<sup>2</sup> + bx + c = 0, simplemente dividimos entre a:</p>
+                <div class="equation">x<sup>2</sup> + (b/a)x + (c/a) = 0 &nbsp;&nbsp;&nbsp; (26)</div>
+                <p>Aplicamos el metodo con B = b/a y C = c/a:</p>
+                <div class="equation">u = -b/(2a) &nbsp;&nbsp;&nbsp; (27)</div>
+                <div class="equation">d<sup>2</sup> = (b/(2a))<sup>2</sup> - c/a = (b<sup>2</sup> - 4ac)/(4a<sup>2</sup>) &nbsp;&nbsp;&nbsp; (28)</div>
+                <p>Por tanto:</p>
+                <div class="equation">x = (-b &plusmn; &radic;(b<sup>2</sup> - 4ac))/(2a) &nbsp;&nbsp;&nbsp; (29)</div>
+                <p>Obtenemos asi la formula cuadratica tradicional, demostrando la equivalencia.</p>
+
+                <h2>7. Conclusion</h2>
+                <p>El metodo de Po Shen Loh no es un descubrimiento matematico nuevo en el sentido de revelar ecuaciones desconocidas, sino una reinterpretacion pedagogica que facilita la comprension de la estructura de la ecuacion cuadratica. Su enfoque basado en la simetria y las relaciones de Vieta ofrece una alternativa mas elegante y menos mecanica que la memorizacion de la formula cuadratica.</p>
+                <p>Este metodo esta ganando popularidad en la ensenanza de las matematicas, pues permite a los estudiantes entender por que funciona la formula, en lugar de solo como aplicarla.</p>
+
+                <div class="references">
+                    <h3>Referencias</h3>
+                    <p>[1] Loh, P. S. (2019). A Simple Proof of the Quadratic Formula. arXiv:1910.06709.</p>
+                    <p>[2] Vieta, F. (1615). De aequationum recognitione et emendatione.</p>
+                    <p>[3] Stewart, J. (2015). Calculo: Trascendentes tempranas. Cengage Learning.</p>
+                </div>
+                <div class="page-number">2</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>Apéndice A. Demostración alternativa usando completación de cuadrados</h2>
+                <p>El método tradicional de completación de cuadrados:</p>
+                <div class="equation">x<sup>2</sup> + Bx + C = 0 &nbsp;&nbsp;&nbsp; (30)</div>
+                <div class="equation">x<sup>2</sup> + Bx = -C &nbsp;&nbsp;&nbsp; (31)</div>
+                <div class="equation">x<sup>2</sup> + Bx + (B/2)<sup>2</sup> = (B/2)<sup>2</sup> - C &nbsp;&nbsp;&nbsp; (32)</div>
+                <div class="equation">(x + B/2)<sup>2</sup> = (B/2)<sup>2</sup> - C &nbsp;&nbsp;&nbsp; (33)</div>
+                <div class="equation">x + B/2 = &plusmn;&radic;((B/2)<sup>2</sup> - C) &nbsp;&nbsp;&nbsp; (34)</div>
+                <div class="equation">x = -B/2 &plusmn; &radic;((B/2)<sup>2</sup> - C) &nbsp;&nbsp;&nbsp; (35)</div>
+                <p>Notese la similitud con el metodo de Po Shen Loh, que enfatiza la interpretacion geometrica de u = -B/2 como el punto medio de las raices.</p>
+                <div class="page-number">3</div>
+            </div>
+        `;
+
+        // Contenido PDF 2 - Condicionales
+        const pdfCondicionales = `
+            <div class="pdf-page">
+                <h1>Condicionales en Python: Una Guia Completa</h1>
+                <p class="subtitle">Resumen Tecnico</p>
+                <p class="date">27 de febrero de 2026</p>
+
+                <div class="abstract">
+                    <p>Este articulo presenta un resumen completo de los diferentes tipos de estructuras condicionales disponibles en Python. Se exploran desde las mas basicas hasta las mas avanzadas, incluyendo ejemplos practicos y mejores practicas de uso. El documento esta disenado para programadores de todos los niveles que deseen comprender a fondo el manejo de condiciones en Python.</p>
+                </div>
+
+                <h2>1 Introduccion</h2>
+                <p>Las estructuras condicionales son fundamentales en la programacion, ya que permiten controlar el flujo de ejecucion basandose en condiciones especificas. Python ofrece una sintaxis elegante y legible para implementar estas estructuras, siguiendo la filosofia del lenguaje de ser claro y explicito.</p>
+
+                <h2>2 Condicionales Basicos</h2>
+                
+                <h3>2.1 La sentencia if</h3>
+                <p>La forma mas simple de condicional evalua una condicion y ejecuta un bloque de codigo si esta es verdadera.</p>
+                <pre>edad = 18
+if edad >= 18:
+    print("Eres mayor de edad")</pre>
+
+                <h3>2.2 La sentencia if-else</h3>
+                <p>Permite ejecutar un bloque alternativo cuando la condicion no se cumple.</p>
+                <pre>temperatura = 25
+if temperatura > 30:
+    print("Hace calor")
+else:
+    print("Temperatura agradable")</pre>
+
+                <h3>2.3 La sentencia if-elif-else</h3>
+                <p>Para manejar multiples condiciones de manera eficiente.</p>
+                <pre>calificacion = 85
+if calificacion >= 90:
+    print("Excelente")
+elif calificacion >= 70:
+    print("Aprobado")
+else:
+    print("Necesita mejorar")</pre>
+
+                <h2>3 Condicionales Anidados</h2>
+                <p>Los condicionales pueden contener otros condicionales en su interior, aunque se recomienda evitarlos cuando sea posible para mantener la legibilidad.</p>
+                <pre>usuario_autenticado = True
+tiene_permiso = True
+
+if usuario_autenticado:
+    if tiene_permiso:
+        print("Acceso concedido")
+    else:
+        print("Permisos insuficientes")
+else:
+    print("Usuario no autenticado")</pre>
+                <div class="page-number">1</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>4 Operadores de Comparacion y Logicos</h2>
+                
+                <h3>4.1 Operadores de Comparacion</h3>
+                <pre>x, y = 10, 5
+if x > y and x != 0:
+    print("x es mayor que y y no es cero")
+
+if x == 10 or y == 10:
+    print("Al menos uno es 10")
+
+if not x < y:
+    print("x no es menor que y")</pre>
+
+                <h3>4.2 Condicionales con Operadores de Identidad</h3>
+                <pre>lista1 = [1, 2, 3]
+lista2 = [1, 2, 3]
+lista3 = lista1
+
+if lista1 is lista3:
+    print("Son el mismo objeto")
+
+if lista1 is not lista2:
+    print("Son objetos diferentes")</pre>
+
+                <h2>5 Operador Ternario</h2>
+                <p>Python ofrece una forma compacta de escribir condicionales simples en una sola linea.</p>
+                <pre>edad = 20
+mensaje = "Mayor de edad" if edad >= 18 else "Menor de edad"
+print(mensaje)
+
+# Uso con operaciones
+numero = 7
+resultado = "Par" if numero % 2 == 0 else "Impar"
+print(f"El numero {numero} es {resultado}")</pre>
+
+                <h2>6 Condicionales con Estructuras de Datos</h2>
+                
+                <h3>6.1 Verificacion en Listas y Tuplas</h3>
+                <pre>colores = ["rojo", "azul", "verde"]
+if "azul" in colores:
+    print("El azul esta disponible")
+
+if "amarillo" not in colores:
+    print("El amarillo no esta disponible")
+
+# Verificacion en tuplas
+coordenadas = (10, 20)
+if 10 in coordenadas:
+    print("La coordenada x esta presente")</pre>
+
+                <h3>6.2 Condiciones con Diccionarios</h3>
+                <pre>usuario = {"nombre": "Ana", "edad": 25}
+if usuario.get("edad", 0) >= 18:
+    print(f"{usuario['nombre']} es mayor de edad")
+
+# Verificacion de claves
+if "email" in usuario:
+    print(f"Email: {usuario['email']}")
+else:
+    print("Email no proporcionado")
+
+# Verificacion de valores
+if 25 in usuario.values():
+    print("Hay un usuario con 25 anos")</pre>
+                <div class="page-number">2</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>7 Condicionales con Funciones</h2>
+                <p>Las funciones pueden devolver valores booleanos para usar en condicionales.</p>
+                <pre>def es_par(numero):
+    return numero % 2 == 0
+
+def es_positivo(numero):
+    return numero > 0
+
+def es_palindromo(texto):
+    return texto == texto[::-1]
+
+numero = 7
+texto = "ana"
+
+if es_par(numero):
+    print(f"{numero} es par")
+elif es_positivo(numero):
+    print(f"{numero} es positivo e impar")
+
+if es_palindromo(texto):
+    print(f"'{texto}' es un palindromo")</pre>
+
+                <h2>8 Manejo de Excepciones como Condicionales</h2>
+                <p>Las excepciones pueden usarse para manejar situaciones condicionales.</p>
+                <pre>try:
+    numero = int(input("Ingrese un numero: "))
+    resultado = 10 / numero
+    print(f"Resultado: {resultado}")
+except ValueError:
+    print("Error: Debe ingresar un numero valido")
+except ZeroDivisionError:
+    print("Error: No se puede dividir por cero")
+except Exception as e:
+    print(f"Error inesperado: {e}")
+finally:
+    print("Bloque finally siempre se ejecuta")</pre>
+
+                <h2>9 Condicionales en Comprensiones</h2>
+                <p>Las comprensiones pueden incluir condiciones para filtrar elementos.</p>
+                <pre>numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Filtrar pares
+pares = [n for n in numeros if n % 2 == 0]
+print(f"Numeros pares: {pares}")
+
+# Filtrar multiples condiciones
+especiales = [n for n in numeros if n % 2 == 0 and n > 5]
+print(f"Pares mayores que 5: {especiales}")
+
+# Con condicion else (Python 3.8+)
+resultados = ["Par" if n % 2 == 0 else "Impar" for n in numeros[:5]]
+print(f"Clasificacion: {resultados}")
+
+# Comprension de diccionarios con condicion
+cuadrados_pares = {n: n**2 for n in numeros if n % 2 == 0}
+print(f"Cuadrados de pares: {cuadrados_pares}")</pre>
+                <div class="page-number">3</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>10 Match Statement (Python 3.10+)</h2>
+                <p>La nueva estructura match-case ofrece una alternativa mas elegante a multiples if-elif.</p>
+                <pre>def procesar_comando(comando):
+    match comando:
+        case "iniciar":
+            print("Iniciando sistema...")
+        case "detener":
+            print("Deteniendo sistema...")
+        case "reiniciar":
+            print("Reiniciando sistema...")
+        case _:
+            print("Comando no reconocido")
+
+# Match con patrones complejos
+def analizar_punto(punto):
+    match punto:
+        case (0, 0):
+            print("Origen")
+        case (0, y):
+            print(f"Eje Y en {y}")
+        case (x, 0):
+            print(f"Eje X en {x}")
+        case (x, y):
+            print(f"Punto en ({x}, {y})")
+
+# Match con condiciones (guardas)
+def clasificar_numero(num):
+    match num:
+        case n if n < 0:
+            print("Negativo")
+        case 0:
+            print("Cero")
+        case n if n > 0 and n <= 10:
+            print("Positivo pequeno")
+        case n if n > 10:
+            print("Positivo grande")</pre>
+
+                <h2>11 Condicionales con Any y All</h2>
+                <p>Funciones utiles para evaluar multiples condiciones.</p>
+                <pre>condiciones = [
+    10 > 5,
+    "python" == "python",
+    3 in [1, 2, 3]
+]
+
+if all(condiciones):
+    print("Todas las condiciones son verdaderas")
+
+if any([x > 10 for x in [5, 8, 12, 3]]):
+    print("Al menos un numero es mayor que 10")
+
+# Verificacion en listas
+numeros = [2, 4, 6, 8, 10]
+if all(n % 2 == 0 for n in numeros):
+    print("Todos los numeros son pares")</pre>
+                <div class="page-number">4</div>
+            </div>
+
+            <div class="pdf-page">
+                <h2>12 Mejores Practicas</h2>
+                
+                <h3>12.1 Evitar Anidamiento Excesivo</h3>
+                <pre># Menos legible - EVITAR
+if condicion1:
+    if condicion2:
+        if condicion3:
+            hacer_algo()
+
+# Mas legible - RECOMENDADO
+if condicion1 and condicion2 and condicion3:
+    hacer_algo()</pre>
+
+                <h3>12.2 Usar Valores Truthy/Falsy</h3>
+                <p>Python considera ciertos valores como booleanos en contextos condicionales.</p>
+                <pre># Valores Falsy: None, False, 0, "", [], (), {}
+nombre = ""
+if nombre:  # Equivalente a if nombre != ""
+    print(f"Hola {nombre}")
+else:
+    print("Nombre no proporcionado")
+
+lista = []
+if not lista:  # Equivalente a if len(lista) == 0
+    print("La lista esta vacia")
+
+# Uso practico
+def procesar_usuario(usuario=None):
+    if not usuario:  # Verifica None y valores vacios
+        usuario = {"nombre": "Invitado"}
+    return usuario</pre>
+
+                <h3>12.3 Expresiones vs Sentencias</h3>
+                <pre># Operador ternario (expresion) - para valores simples
+descuento = 0.1 if cliente_premium else 0.05
+
+# If tradicional (sentencia) - para bloques complejos
+if usuario_activo and tiene_permiso:
+    realizar_operacion_compleja()
+    enviar_notificacion()
+    registrar_actividad()</pre>
+
+                <h2>13 Ejemplos Practicos Combinados</h2>
+                <h3>13.1 Sistema de Validacion</h3>
+                <pre>def validar_formulario(datos):
+    errores = []
+
+    # Validacion con condicionales multiples
+    if not datos.get("nombre"):
+        errores.append("El nombre es requerido")
+    elif len(datos["nombre"]) < 3:
+        errores.append("El nombre debe tener al menos 3 caracteres")
+
+    if not datos.get("email"):
+        errores.append("El email es requerido")
+    elif "@" not in datos["email"]:
+        errores.append("Email invalido")
+
+    if datos.get("edad"):
+        try:
+            edad = int(datos["edad"])
+            if edad < 18:
+                errores.append("Debe ser mayor de edad")
+        except ValueError:
+            errores.append("Edad debe ser un numero")
+
+    return {
+        "valido": len(errores) == 0,
+        "errores": errores,
+        "datos": datos if len(errores) == 0 else None
+    }</pre>
+
+                <h2>14 Conclusion</h2>
+                <p>Python ofrece una amplia gama de estructuras condicionales que se adaptan a diferentes necesidades y estilos de programacion. Desde el simple if hasta el moderno match-case, el lenguaje proporciona herramientas claras y expresivas para controlar el flujo del programa. La clave esta en elegir la estructura mas apropiada para cada situacion, manteniendo siempre la legibilidad y eficiencia del codigo.</p>
+                <p><strong>Las principales recomendaciones son:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Usar la estructura mas simple que resuelva el problema</li>
+                    <li>Evitar anidamiento excesivo (mantener maximo 2-3 niveles)</li>
+                    <li>Aprovechar los valores truthy/falsy de Python</li>
+                    <li>Utilizar match-case para multiples patrones (Python 3.10+)</li>
+                    <li>Mantener las condiciones claras y legibles</li>
+                </ul>
+
+                <div class="references">
+                    <h3>Referencias</h3>
+                    <p>[1] Python Software Foundation. (2024). Documentacion oficial de Python.</p>
+                    <p>[2] PEP 8 - Style Guide for Python Code.</p>
+                    <p>[3] PEP 636 - Structural Pattern Matching: Tutorial.</p>
+                    <p>[4] Brandl, G. (2023). Python Patterns - Guide to Python Conditional Statements.</p>
+                </div>
+                <div class="page-number">5</div>
+            </div>
+        `;
+
+        // Elementos del DOM
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const contentPanel = document.getElementById('contenido');
+
+        // Función para generar grid de comandos
+        function generarComandos() {
+            return comandos.map(cmd => `<div class="comando-item">${cmd}</div>`).join('');
+        }
+
+        // Estado del PDF activo
+        let pdfActivo = 'poshenloh';
+
+        // Función para generar contenido de la pestaña de entrega
+        function generarContenidoEntrega() {
+            return `
+                <div class="entrega-container fade-in">
+                    <div class="entrega-header">
+                        <h3>Documentos Entregados</h3>
+                        <span class="entrega-fecha">Viernes 27 de febrero de 2026</span>
+                    </div>
+                    
+                    <div class="pdf-submenu">
+                        <div class="pdf-tab ${pdfActivo === 'poshenloh' ? 'activo' : ''}" data-pdf="poshenloh">
+                            <div class="tab-icon">PDF</div>
+                            <div class="tab-info">
+                                <h4>Po Shen Loh</h4>
+                                <p>Resolucion de ecuaciones cuadraticas</p>
                             </div>
-                            <div style="margin-top: 1.5rem; font-size: 1rem; color: #2d6d7a; background: #dff0ec; padding: 0.5rem 1.5rem; border-radius: 40px;">
-                                ⚡ comandos esenciales · print, input, numpy, math, import, for, etc.
+                        </div>
+                        <div class="pdf-tab ${pdfActivo === 'condicionales' ? 'activo' : ''}" data-pdf="condicionales">
+                            <div class="tab-icon">PDF</div>
+                            <div class="tab-info">
+                                <h4>Condicionales Python</h4>
+                                <p>Guia completa de estructuras condicionales</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pdf-viewer">
+                        <div class="pdf-toolbar">
+                            <span class="pdf-toolbar-title">${pdfActivo === 'poshenloh' ? 'Po_Shen_Loh.pdf' : 'Condicionales.pdf'}</span>
+                            <div class="pdf-toolbar-actions">
+                                <button class="pdf-btn" onclick="scrollToTop()">Ir arriba</button>
+                                <button class="pdf-btn" onclick="printPDF()">Imprimir</button>
+                            </div>
+                        </div>
+                        <div class="pdf-content" id="pdf-content">
+                            ${pdfActivo === 'poshenloh' ? pdfPoShenLoh : pdfCondicionales}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Funciones auxiliares
+        function scrollToTop() {
+            document.getElementById('pdf-content').scrollTop = 0;
+        }
+
+        function printPDF() {
+            window.print();
+        }
+
+        // Función para activar pestañas
+        function activarPestania(tabId) {
+            sidebarItems.forEach(item => item.classList.remove('activo'));
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('activo');
+
+            switch(tabId) {
+                case 'clase9':
+                    contentPanel.innerHTML = `
+                        <div class="comandos-card fade-in">
+                            <h2>Comando clase nueve</h2>
+                            <div class="comandos-grid">
+                                ${generarComandos()}
                             </div>
                         </div>
                     `;
-                } 
-                else if (idTab === 'variables') {
-                    document.getElementById('tab-variables').classList.add('activo');
-                    contenidoPanel.innerHTML = `
-                        <div class="placeholder-tab">
-                            <h3>📦 Variables y tipos</h3>
-                            <p style="font-size:1.3rem; background:#eef4f7; padding:1.5rem; border-radius:60px;">
-                                int, float, str, bool, list, tuple, dict, set, None<br>
-                                <span style="color:#147382;">"variable = valor" · asignación dinámica</span>
+                    break;
+                case 'variables':
+                    contentPanel.innerHTML = `
+                        <div class="placeholder-tab fade-in">
+                            <h3>Variables y tipos</h3>
+                            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-top: 1rem;">
+                                int, float, str, bool, list, tuple, dict, set, None
                             </p>
-                            <div style="margin-top: 2rem;">⚡ puedes explorar ejemplos más adelante</div>
+                            <p style="margin-top: 1rem; color: var(--accent);">variable = valor - asignacion dinamica</p>
                         </div>
                     `;
-                }
-                else if (idTab === 'bucles') {
-                    document.getElementById('tab-bucles').classList.add('activo');
-                    contenidoPanel.innerHTML = `
-                        <div class="placeholder-tab">
-                            <h3>🔄 Bucles / for</h3>
-                            <p style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content:center;">
-                                <span class="comando-item" style="background:#2f626e;">for i in range(5):</span>
-                                <span class="comando-item" style="background:#2f626e;">while condicion:</span>
-                                <span class="comando-item" style="background:#2f626e;">break / continue</span>
-                                <span class="comando-item" style="background:#2f626e;">for clave, valor in dict.items():</span>
-                            </p>
+                    break;
+                case 'bucles':
+                    contentPanel.innerHTML = `
+                        <div class="placeholder-tab fade-in">
+                            <h3>Bucles / for</h3>
+                            <div class="comandos-grid" style="margin-top: 1.5rem;">
+                                <div class="comando-item">for i in range(5):</div>
+                                <div class="comando-item">while condicion:</div>
+                                <div class="comando-item">break / continue</div>
+                                <div class="comando-item">for k, v in dict:</div>
+                            </div>
                         </div>
                     `;
-                }
-                else if (idTab === 'librerias') {
-                    document.getElementById('tab-librerias').classList.add('activo');
-                    contenidoPanel.innerHTML = `
-                        <div class="placeholder-tab">
-                            <h3>📚 Librerías destacadas</h3>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:2rem 0;">
+                    break;
+                case 'librerias':
+                    contentPanel.innerHTML = `
+                        <div class="placeholder-tab fade-in">
+                            <h3>Librerias destacadas</h3>
+                            <div class="comandos-grid" style="margin-top: 1.5rem;">
                                 <div class="comando-item">numpy as np</div>
                                 <div class="comando-item">math</div>
-                                <div class="comando-item">import pandas</div>
-                                <div class="comando-item">matplotlib.pyplot</div>
+                                <div class="comando-item">pandas</div>
+                                <div class="comando-item">matplotlib</div>
                                 <div class="comando-item">scipy</div>
                                 <div class="comando-item">statistics</div>
                             </div>
-                            <p>from math import pi, sqrt, sin</p>
                         </div>
                     `;
-                }
-                else if (idTab === 'funciones') {
-                    document.getElementById('tab-funciones').classList.add('activo');
-                    contenidoPanel.innerHTML = `
-                        <div class="placeholder-tab">
-                            <h3>⚙️ Funciones extras</h3>
-                            <p>def mi_funcion(param): <br> &nbsp;&nbsp;&nbsp;&nbsp;return valor</p>
-                            <p>lambda x: x**2, map(), filter(), zip(), enumerate()</p>
-                            <div style="background:#c1e3e9; border-radius:30px; padding:1rem;">*args, **kwargs · decoradores · generadores</div>
+                    break;
+                case 'funciones':
+                    contentPanel.innerHTML = `
+                        <div class="placeholder-tab fade-in">
+                            <h3>Funciones extras</h3>
+                            <p style="margin-top: 1rem; font-family: 'IBM Plex Mono', monospace;">
+                                def mi_funcion(param):<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;return valor
+                            </p>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                lambda, map(), filter(), zip(), enumerate()
+                            </p>
                         </div>
                     `;
-                }
+                    break;
+                case 'entrega':
+                    contentPanel.innerHTML = generarContenidoEntrega();
+                    // Reasignar eventos a las tabs de PDF
+                    setTimeout(() => {
+                        document.querySelectorAll('.pdf-tab').forEach(tab => {
+                            tab.addEventListener('click', function() {
+                                pdfActivo = this.dataset.pdf;
+                                contentPanel.innerHTML = generarContenidoEntrega();
+                            });
+                        });
+                    }, 10);
+                    break;
             }
+        }
 
-            // Asignar eventos a cada elemento del menú lateral
-            document.getElementById('tab-clase9').addEventListener('click', function(e) {
-                activarPestaña('clase9');
+        // Asignar eventos
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                activarPestania(this.dataset.tab);
             });
-            document.getElementById('tab-variables').addEventListener('click', function(e) {
-                activarPestaña('variables');
-            });
-            document.getElementById('tab-bucles').addEventListener('click', function(e) {
-                activarPestaña('bucles');
-            });
-            document.getElementById('tab-librerias').addEventListener('click', function(e) {
-                activarPestaña('librerias');
-            });
-            document.getElementById('tab-funciones').addEventListener('click', function(e) {
-                activarPestaña('funciones');
-            });
+        });
 
-            // Inicializar con la pestaña "Comando clase nueve" activa (por defecto ya lo está en HTML)
-            // Pero aseguramos que los comandos se rendericen (en caso de que el estático no tenga grid).
-            // El contenido ya existe pero igual podemos sobreescribir para asegurar grid con todos los comandos
-            // sin embargo, para mantener consistencia ejecutamos la activación inicial.
-            // Pero cuidado: duplicaría si ya existe. Preferimos llamar a activarPestaña('clase9') al inicio para unificar.
-            activarPestaña('clase9');
-        })();
+        // Inicializar con la pestaña de entrega activa
+        activarPestania('entrega');
     </script>
-
-    <!-- pequeño fix para que el grid de comandos tenga todos los items incluso sin JS (respaldo) -->
-    <noscript>
-        <style>.comandos-grid { display: none; }</style>
-        <div style="background: #ffcccb; padding: 1rem;">JavaScript necesario para visualizar completamente los comandos</div>
-    </noscript>
 </body>
 </html>
